@@ -11,15 +11,16 @@ from ATTENTION import get_attender
 class DeterministicEncoder(nn.Module):
     """The Deterministic Encoder with Attentive Mechanism"""
 
-    def __init__(self,encoding_size,attention = False,attention_type = 'scaledot',activation = 'leaky',lstm_size = 0):
+    def __init__(self,encoding_size,attention = False,attention_type = 'scaledot',activation = 'relu',lstm_size = 0):
         """
         AttnCNP encoder.
         
         Args:
         encoding_size: Dimension of each layer of the MLP
         attention: Whether to use self-attention in the encoder for the context points
-        attention_type: The type of attention to use. Choose from 'scaledot', etc (Add examples)
+        attention_type: The type of attention to use. Choose from 'scaledot' or 'multihead'
         activation: Whether to use ReLu or LeakyReLu activation function
+        lstm_size: The size of the encoded LSTM output (0 if no LSTM)
         
         Returns:
         R: MLP (and maybe attention) representation of the input
@@ -44,7 +45,6 @@ class DeterministicEncoder(nn.Module):
             self.relu         = nn.LeakyReLU()
         
         self.encoding_size = encoding_size
-        #self.batchnorm = nn.BatchNorm1d(encoding_size)
         self.batchnorm = nn.Identity()
         #Attention Mechanism
         if attention:
@@ -104,7 +104,7 @@ class DeterministicEncoder(nn.Module):
 class LatentEncoder(nn.Module):
     """The Latent Encoder with capability to make multiple samples"""
 
-    def __init__(self,encoding_size,latent_dim = 8,latent_space_sample = 1,self_attention = False,attention_type = 'scaledot',activation = 'leaky',lstm_size = 0,lstm_agg = False):
+    def __init__(self,encoding_size,latent_dim = 8,latent_space_sample = 1,self_attention = False,attention_type = 'scaledot',activation = 'relu',lstm_size = 0,lstm_agg = False):
         """
         LNP encoder.
         
@@ -112,7 +112,12 @@ class LatentEncoder(nn.Module):
         encoding_size: Dimension of each layer of the MLP
         latent_dim: The dimension of the latent space
         latent_space_sample: How many samples to make of the latent space. Recommended to use 20 if not using NPVI
-        
+        self_attention: Whether to use self-attention in the encoder for the context points
+        attention_type: The type of attention to use. Choose from 'scaledot' or 'multihead'
+        activation: Whether to use ReLu or LeakyReLu activation function
+        lstm_size: The size of the encoded LSTM output (0 if no LSTM)
+        lstm_agg: Whether to use an LSTM to aggregate the 
+
         Returns:
         None
         """
@@ -169,10 +174,8 @@ class LatentEncoder(nn.Module):
 
         Args:
           context_x, context_y: Tensors of size BATCH_SIZE x NUM_OF_OBSERVATIONS
-          target_x: Needed for the shape of output
 
         Returns:
-          z: The latent variable generated from sampling of the latent space.
           latent_dist: The underlying latent space distribution
         """
         # Concatenate x and y along the filter axes
