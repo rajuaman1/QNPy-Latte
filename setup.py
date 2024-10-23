@@ -19,7 +19,7 @@ setup(
     'torch>=1.13.0',
     'tqdm>=4.64.1',
     'tslearn>=0.6.2']
-    authors = 'Aman Raju, Marina Pavlovic, Andjelka Kovacevic, Dragana Ilic, Iva Cvorovic-Hajdinjak',
+    authors = 'Aman Raju',
     author_email='rajuaman@gmail.com',
     description='Latent ATTEntive Neural Processes for Quasar Light Curves with parametric recovery',
     long_description=open('README.md').read(),
