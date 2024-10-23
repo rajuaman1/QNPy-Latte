@@ -1,5 +1,8 @@
 from setuptools import setup, find_packages
 
+with open("README.md", "r") as fh:
+    long_description = fh.read()
+
 setup(
     name='QNPy_Latte',
     version='0.0.1',
@@ -22,7 +25,7 @@ setup(
     authors = 'Aman Raju',
     author_email='rajuaman@gmail.com',
     description='Latent ATTEntive Neural Processes for Quasar Light Curves with parametric recovery',
-    long_description=open('README.md').read(),
+    long_description= long_description,
     long_description_content_type='text/markdown',
     url='https://github.com/rajuaman1/QNPy_Latte',  # Project's URL
     classifiers=[
