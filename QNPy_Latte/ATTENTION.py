@@ -1,3 +1,5 @@
+#Adapted from https://github.com/YannDubs/Neural-Process-Family/tree/master
+
 import abc
 import math
 
