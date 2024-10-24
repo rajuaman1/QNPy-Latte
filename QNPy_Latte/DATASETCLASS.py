@@ -8,7 +8,7 @@ from torch.utils.data import IterableDataset, DataLoader, Dataset
 from torch.distributions.multivariate_normal import MultivariateNormal
 import torch
 
-class LighCurvesDataset(Dataset):
+class LightCurvesDataset(Dataset):
     """Dataset class."""
     
     def __init__(self, root_dir, status,num_target_smooth = 400, tf_dir = None, param_df = None, param_columns = None, class_labels_df = None):

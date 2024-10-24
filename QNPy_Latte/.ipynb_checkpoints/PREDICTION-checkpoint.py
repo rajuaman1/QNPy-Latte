@@ -18,7 +18,6 @@ from tqdm import tqdm
 import json
 
 import dill
-import pickle
 
 import math
 
@@ -36,9 +35,9 @@ import torch.nn.functional as F
 from sklearn.metrics import mean_squared_error
 
 
-from MODEL_ARCHITECTURE import FullModel
-from LOSS_METRICS import LogProbLoss, MSELoss
-from DATASETCLASS import LightCurvesDataset, collate_lcs
+from CNP_ARCHITECTURE import FullModel
+from CNP_METRICS import LogProbLoss, MSELoss
+from CNP_DATASETCLASS import LighCurvesDataset, collate_lcs
 
 tf_loss = LogProbLoss(None,param = True)
 param_loss = LogProbLoss(None,param = True)
@@ -329,7 +328,7 @@ def plot_function2(tr,target_x, target_y, context_x, context_y, yerr1, pred_y, v
         print('Not saving')
 
 def load_test_data(DATA_PATH_TEST,num_target_smooth = 400,tf_dir = None,param_df = None, param_columns = None, class_labels_df = None):
-    testSet = LightCurvesDataset(root_dir = DATA_PATH_TEST, status = 'test',num_target_smooth = num_target_smooth,tf_dir = tf_dir,param_df = param_df, param_columns = param_columns, class_labels_df = class_labels_df)
+    testSet = LighCurvesDataset(root_dir = DATA_PATH_TEST, status = 'test',num_target_smooth = num_target_smooth,tf_dir = tf_dir,param_df = param_df, param_columns = param_columns, class_labels_df = class_labels_df)
     testLoader = DataLoader(testSet,
                              num_workers = 0,
                              batch_size  = 1,      # must remain 1
@@ -339,7 +338,7 @@ def load_test_data(DATA_PATH_TEST,num_target_smooth = 400,tf_dir = None,param_df
     return testLoader
 
 def load_train_data(data_path,num_target_smooth = 400,tf_dir = None,param_df = None, param_columns = None, class_labels_df = None):
-    train_set = LightCurvesDataset(root_dir=data_path, status='test',num_target_smooth = num_target_smooth,tf_dir = tf_dir,param_df = param_df, param_columns = param_columns, class_labels_df = class_labels_df)
+    train_set = LighCurvesDataset(root_dir=data_path, status='test',num_target_smooth = num_target_smooth,tf_dir = tf_dir,param_df = param_df, param_columns = param_columns, class_labels_df = class_labels_df)
     train_loader = DataLoader(train_set, 
                               num_workers=0, 
                               batch_size=1, 
@@ -348,7 +347,7 @@ def load_train_data(data_path,num_target_smooth = 400,tf_dir = None,param_df = N
     return train_loader
 
 def load_val_data(data_path,num_target_smooth = 400,tf_dir = None,param_df = None, param_columns = None, class_labels_df = None):
-    valSet = LightCurvesDataset(root_dir = data_path, status = 'test',num_target_smooth = num_target_smooth,tf_dir = tf_dir,param_df = param_df, param_columns = param_columns, class_labels_df = class_labels_df)
+    valSet = LighCurvesDataset(root_dir = data_path, status = 'test',num_target_smooth = num_target_smooth,tf_dir = tf_dir,param_df = param_df, param_columns = param_columns, class_labels_df = class_labels_df)
     valLoader = DataLoader(valSet,
                            num_workers = 0,
                            batch_size  = 1, 

@@ -28,9 +28,9 @@ import torch.nn.functional as F
 from functools import partial
 
 
-from CNP_ARCHITECTURE import FullModel
-from CNP_METRICS import LogProbLoss, MSELoss, MAELoss
-from CNP_DATASETCLASS import LighCurvesDataset, collate_lcs
+from MODEL_ARCHITECTURE import FullModel
+from LOSS_METRICS import LogProbLoss, MSELoss, MAELoss
+from DATASETCLASS import LightCurvesDataset, collate_lcs
 
 def create_split_folders(train_folder='./dataset/train/', test_folder='./dataset/test/', val_folder='./dataset/val/'):
     os.makedirs(train_folder, exist_ok=True)
@@ -83,7 +83,7 @@ np.random.seed(0)
 
 def get_data_loaders(data_path_train, data_path_val, batch_size,tf_dir = None,param_df = None, param_columns = None, class_labels_df = None, data_type = 'train',augment = True):
     if data_type == 'train':
-        train_set = LighCurvesDataset(root_dir=data_path_train, status='train',tf_dir = tf_dir,param_df = param_df, param_columns = param_columns, class_labels_df = class_labels_df)
+        train_set = LightCurvesDataset(root_dir=data_path_train, status='train',tf_dir = tf_dir,param_df = param_df, param_columns = param_columns, class_labels_df = class_labels_df)
         train_loader = DataLoader(train_set,
                                   batch_size=batch_size,
                                   shuffle=True,
@@ -92,7 +92,7 @@ def get_data_loaders(data_path_train, data_path_val, batch_size,tf_dir = None,pa
                                   pin_memory=True)
         return train_loader
     elif data_type == 'val':
-        val_set = LighCurvesDataset(root_dir=data_path_val, status='test',tf_dir = tf_dir,param_df = param_df, param_columns = param_columns, class_labels_df = class_labels_df)
+        val_set = LightCurvesDataset(root_dir=data_path_val, status='test',tf_dir = tf_dir,param_df = param_df, param_columns = param_columns, class_labels_df = class_labels_df)
         val_loader = DataLoader(val_set,
                                 num_workers=0,
                                 batch_size=1,
