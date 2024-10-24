@@ -83,4 +83,23 @@ pip install QNPy_Latte
 We recommend creating a new anaconda enviornment first and then running the above command.
 
 ## Tutorial Notebooks and Scripts
-The associated GitHub contains tutorial notebooks and scripts that utilize the QNPy_Latte package to conduct the clustering and modelling of light curves. Please visit [Our GitHub](https://github.com/rajuaman1/QNPy_Latte) for more.
+Along with the standard package, we provide tutorial notebooks and scripts (COMING SOON) to help in analysis. We provide three different notebook folders here. They include:
+
+1) **Clustering_Tutorial_Notebooks**
+2) **Modelling_Tutorial_Notebooks**
+3) **Modelling_Tutorial_Notebooks_w_Params**
+4) **Modelling_Scripts** (COMING SOON)
+
+It is important that your light curves are in the form of csv files with three columns, mjd, mag and magerr. Store all of them in a single folder, or seperate the folders by band under one main directory. Example, Light_Curves\name.csv or Light_Curves\u_band\name.csv
+
+### Clustering Tutorial Notebooks
+These notebooks walk you through creating clusters through the SOM. **Basic_Example_One_Band** demonstrates how to cluster a light curves in a single band. **Advanced_Visualization_One_Band** brings in more visualizations. **Advanced_Clustering_One_Band** introduces gradient-based clustering for more meaningful clusters from large SOMs. Finally, **Multiband_Clustering** (as the name suggests) implements multiband clusters.
+
+### Modelling Tutorial Notebooks
+These notebooks show you how to use the Latte model to reconstruct light curves. These notebooks are recommended for use in most real cases, where information on the parameters and the transfer function are not included. The **Preprocessing** notebook makes your data suited for use with the Latte model. It pads, transforms to -2,2 and arranges the data into train, test, and validation data folders. Then **Training_Model** actually trains the model on the training data, with validation data to help choose the best epoch. The metrics associated with training are also saved as readable csv files. Finally, **Modelling** uses the trained model to provide both visualizations of and the actual data associated with reconstructed light curves.
+
+### Modelling Tutorial Notebooks w Params
+These notebooks work and are named similar to before. The only difference is that for this folder, you need to provide transfer functions and a dataframe containing parameters associated with the generation of the light curve. The final result will include the comparison of the reconstructed transfer function and the parameters as well.
+
+### Modelling Scripts (COMING SOON)
+Don't have the time to go through the notebook or want to run your analysis on a supercomputer? Use one of the scripts that we provide. We provide scripts that are capable of clustering and then training seperate models on each cluster, running through the entire process on real light curves and a script to generate both reconstructions and recovered transfer functions and parameters.
