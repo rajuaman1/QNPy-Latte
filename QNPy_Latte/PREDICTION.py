@@ -36,9 +36,9 @@ import torch.nn.functional as F
 from sklearn.metrics import mean_squared_error
 
 
-from MODEL_ARCHITECTURE import FullModel
-from LOSS_METRICS import LogProbLoss, MSELoss
-from DATASETCLASS import LightCurvesDataset, collate_lcs
+from .MODEL_ARCHITECTURE import FullModel
+from .LOSS_METRICS import LogProbLoss, MSELoss
+from .DATASETCLASS import LightCurvesDataset, collate_lcs
 
 tf_loss = LogProbLoss(None,param = True)
 param_loss = LogProbLoss(None,param = True)

@@ -28,9 +28,9 @@ import torch.nn.functional as F
 from functools import partial
 
 
-from MODEL_ARCHITECTURE import FullModel
-from LOSS_METRICS import LogProbLoss, MSELoss, MAELoss
-from DATASETCLASS import LightCurvesDataset, collate_lcs
+from .MODEL_ARCHITECTURE import FullModel
+from .LOSS_METRICS import LogProbLoss, MSELoss, MAELoss
+from .DATASETCLASS import LightCurvesDataset, collate_lcs
 
 def create_split_folders(train_folder='./dataset/train/', test_folder='./dataset/test/', val_folder='./dataset/val/'):
     os.makedirs(train_folder, exist_ok=True)

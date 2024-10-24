@@ -6,7 +6,7 @@ from torch.distributions import Normal
 from torch.distributions.kl import kl_divergence
 import torch.nn.functional as F
 import abc
-from ATTENTION import get_attender
+from .ATTENTION import get_attender
 
 class DeterministicEncoder(nn.Module):
     """The Deterministic Encoder with Attentive Mechanism"""
