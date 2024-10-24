@@ -70,7 +70,12 @@ Thus, we are able to not just perform reconstruction of the light curve itself, 
 
 ## Installation
 
-To install QNPy_Latte, use:
+It is recommended to use a virtual enviornment with Anaconda to install QNPy_Latte. Please install one in Python 3.9 as:
+```
+conda create --name my_env -c anaconda python=3.9
+```
+
+Activate this enviornment and then install QNPy_Latte by:
 ```
 pip install QNPy_Latte
 ```
