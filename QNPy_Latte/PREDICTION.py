@@ -31,6 +31,7 @@ import torch
 import torch.nn as nn
 from torch.utils.data import IterableDataset, DataLoader, Dataset
 from torch.distributions.multivariate_normal import MultivariateNormal
+from torch.distributions import Normal
 import torch.nn.functional as F
 
 from sklearn.metrics import mean_squared_error
@@ -797,33 +798,58 @@ def Plotting_TF_Mean(predicted_tf,actual_tf,ttau,TF_SAVE_PATH,ttau_plot_len = -1
 
     #PLot the mean transfer function of the predicted and actual tfs
     plt.figure()
-    plt.plot(ttau[:ttau_plot_len],averaged_tf.loc.numpy()[0][:ttau_plot_len],label = 'Prediction')
-    plt.fill_between(ttau[:ttau_plot_len],averaged_tf.loc.numpy()[0][:ttau_plot_len]+averaged_tf.scale.numpy()[0][:ttau_plot_len],averaged_tf.loc.numpy()[0][:ttau_plot_len]-averaged_tf.scale.numpy()[0][:ttau_plot_len],alpha = 0.6,label = r'$1\sigma$ CI')
-    plt.fill_between(ttau[:ttau_plot_len],averaged_tf.loc.numpy()[0][:ttau_plot_len]+2*averaged_tf.scale.numpy()[0][:ttau_plot_len],averaged_tf.loc.numpy()[0][:ttau_plot_len]-2*averaged_tf.scale.numpy()[0][:ttau_plot_len],alpha = 0.4,label = r'$2\sigma$ CI')
-    plt.fill_between(ttau[:ttau_plot_len],averaged_tf.loc.numpy()[0][:ttau_plot_len]+3*averaged_tf.scale.numpy()[0][:ttau_plot_len],averaged_tf.loc.numpy()[0][:ttau_plot_len]-3*averaged_tf.scale.numpy()[0][:ttau_plot_len],alpha = 0.2,label = r'$3\sigma$ CI')
-    plt.plot(ttau[:ttau_plot_len],np.mean(actual_tf,axis = 0)[:ttau_plot_len],label = 'Real')
+    plt.plot(ttau[:ttau_plot_len],averaged_tf.loc.numpy()[0][:ttau_plot_len],label = 'Prediction',color='b')
+    plt.fill_between(ttau[:ttau_plot_len],averaged_tf.loc.numpy()[0][:ttau_plot_len]+averaged_tf.scale.numpy()[0][:ttau_plot_len],averaged_tf.loc.numpy()[0][:ttau_plot_len]-averaged_tf.scale.numpy()[0][:ttau_plot_len],alpha = 0.6,label = r'$1\sigma$ CI',color = '#ff9999')
+    plt.fill_between(ttau[:ttau_plot_len],averaged_tf.loc.numpy()[0][:ttau_plot_len]+2*averaged_tf.scale.numpy()[0][:ttau_plot_len],averaged_tf.loc.numpy()[0][:ttau_plot_len]-2*averaged_tf.scale.numpy()[0][:ttau_plot_len],alpha = 0.4,label = r'$2\sigma$ CI',color = '#ff9999')
+    plt.fill_between(ttau[:ttau_plot_len],averaged_tf.loc.numpy()[0][:ttau_plot_len]+3*averaged_tf.scale.numpy()[0][:ttau_plot_len],averaged_tf.loc.numpy()[0][:ttau_plot_len]-3*averaged_tf.scale.numpy()[0][:ttau_plot_len],alpha = 0.2,label = r'$3\sigma$ CI',color = '#ff9999')
+    plt.plot(ttau[:ttau_plot_len],np.mean(actual_tf,axis = 0)[:ttau_plot_len],label = 'Real',color='k')
     plt.xlabel(r'$\tau$ (light days)')
     plt.ylabel('Transfer Function')
-    plt.title(f'Mean Test Transfer Function - LogProbLoss: {-tf_loss(averaged_tf,torch.tensor(np.mean(transfer_functions_test,axis = 0))):.2f}')
+    plt.title(f'Mean Transfer Function - LogProbLoss: {-tf_loss(averaged_tf,torch.tensor(np.mean(actual_tf,axis = 0))):.2f}')
     plt.legend()
     plt.savefig(TF_SAVE_PATH+'Mean.png')
     plt.close()    
 
 def Plotting_TF_Individual(dataLoader,predicted_tf,actual_tf,ttau,TF_SAVE_PATH,ttau_plot_len = -1):
     #Plot each transfer function individually
-    for num in range(len(dataLoader)):
+    for num in tqdm(range(len(dataLoader))):
         this_name = dataLoader.dataset[num]['lcName']
         loss_one_function = tf_loss(predicted_tf[num],dataLoader.dataset[num]['transfer_function'])
         plt.title(f'{this_name}, LogProbLoss: {-loss_one_function:.2f}')
         mean_predicted = predicted_tf[num].loc.numpy()[0]
         std_predicted = predicted_tf[num].scale.numpy()[0]
-        plt.plot(ttau[:ttau_plot_len],mean_predicted[:ttau_plot_len],label = 'Prediction')
-        plt.fill_between(ttau[:ttau_plot_len],mean_predicted[:ttau_plot_len]+std_predicted[:ttau_plot_len],mean_predicted[:ttau_plot_len]-std_predicted[:ttau_plot_len],alpha = 0.6,label = r'$1\sigma$ CI')
-        plt.fill_between(ttau[:ttau_plot_len],mean_predicted[:ttau_plot_len]+2*std_predicted[:ttau_plot_len],mean_predicted[:ttau_plot_len]-std_predicted[:ttau_plot_len],alpha = 0.4,label = r'$2\sigma$ CI')
-        plt.fill_between(ttau[:ttau_plot_len],mean_predicted[:ttau_plot_len]+3*std_predicted[:ttau_plot_len],mean_predicted[:ttau_plot_len]-std_predicted[:ttau_plot_len],alpha = 0.2,label = r'$3\sigma$ CI')
-        plt.plot(ttau[:ttau_plot_len],actual_tf[num][:ttau_plot_len],label = 'Actual')
+        plt.plot(ttau[:ttau_plot_len],mean_predicted[:ttau_plot_len],label = 'Prediction',color='b')
+        plt.fill_between(ttau[:ttau_plot_len],mean_predicted[:ttau_plot_len]+std_predicted[:ttau_plot_len],mean_predicted[:ttau_plot_len]-std_predicted[:ttau_plot_len],alpha = 0.6,label = r'$1\sigma$ CI',color = '#ff9999')
+        plt.fill_between(ttau[:ttau_plot_len],mean_predicted[:ttau_plot_len]+2*std_predicted[:ttau_plot_len],mean_predicted[:ttau_plot_len]-std_predicted[:ttau_plot_len],alpha = 0.4,label = r'$2\sigma$ CI',color = '#ff9999')
+        plt.fill_between(ttau[:ttau_plot_len],mean_predicted[:ttau_plot_len]+3*std_predicted[:ttau_plot_len],mean_predicted[:ttau_plot_len]-std_predicted[:ttau_plot_len],alpha = 0.2,label = r'$3\sigma$ CI',color = '#ff9999')
+        plt.plot(ttau[:ttau_plot_len],actual_tf[num][:ttau_plot_len],label = 'Actual',color='k')
         plt.xlabel(r'$\tau$ (light days)')
         plt.ylabel('Transfer Function')
         plt.legend()
         plt.savefig(TF_SAVE_PATH+f'{this_name}.png')
         plt.close()
+
+def Plotting_Param_Individual(dataLoader,predicted_params,actual_params,columns,PARAM_SAVE_PATH):
+    for i,column_name in enumerate(columns):
+        plt.figure()
+        mean_predicted_parameters = []
+        actual_parameters = []
+        std_predicted_parameters = []
+        for num in tqdm(range(len(dataLoader))):
+            this_name = dataLoader.dataset[num]['lcName']
+            mean_predicted = predicted_params[num].loc.numpy()[0][i]
+            mean_predicted_parameters.append(mean_predicted)
+            std_predicted = predicted_params[num].scale.numpy()[0][i]
+            std_predicted_parameters.append(std_predicted)
+            actual_param = actual_params[num][i]
+            actual_parameters.append(actual_param)
+        plt.scatter(actual_parameters,mean_predicted_parameters,color = 'b')
+        plt.errorbar(actual_parameters,mean_predicted_parameters,yerr = std_predicted_parameters,linestyle = '',color = '#ff9999',alpha = 0.8,label = r'$1\sigma$ CI')
+        plt.errorbar(actual_parameters,mean_predicted_parameters,yerr = 2*np.array(std_predicted_parameters),linestyle = '',color = '#ff9998',alpha = 0.6,label = r'$2\sigma$ CI')
+        plt.errorbar(actual_parameters,mean_predicted_parameters,yerr = 3*np.array(std_predicted_parameters),linestyle = '',color = '#ff9997',alpha = 0.4,label = r'$3\sigma$ CI')
+        plt.title(column_name)
+        plt.plot(np.linspace(min(actual_parameters),max(actual_parameters),1000),np.linspace(min(actual_parameters),max(actual_parameters),1000),linestyle = ':',label = '1:1',color = 'k')
+        plt.xlabel('Actual Parameter')
+        plt.ylabel('Predicted Parameter')
+        plt.legend()
+        plt.savefig(PARAM_SAVE_PATH+f'{column_name}.png')
