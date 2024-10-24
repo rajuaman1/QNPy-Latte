@@ -19,8 +19,7 @@ As part of the Serbian In-Kind software contribution to the LSST team (SER-SAG-S
 Parts of this thesis have been presented as:
 
 • [“A Deep Learning Approach for Understanding Quasar Light Curves in the
-Legacy Survey of Space and Time"](https://simpozijum.math.rs/s2023/Aman_Raju_Maths_Symposium_Deep_Learning_LSST.pdf) - Symposium Mathematics and Applica-
-tion, Faculty of Mathematics, University of Belgrade, 2023
+Legacy Survey of Space and Time"](https://simpozijum.math.rs/s2023/Aman_Raju_Maths_Symposium_Deep_Learning_LSST.pdf) - Symposium Mathematics and Application, Faculty of Mathematics, University of Belgrade, 2023
 
 • “QNPy and QhX Workshop” - LSST AGN Science Collaboration Quarterly
 Report, March 2024
