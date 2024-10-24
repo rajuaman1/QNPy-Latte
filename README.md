@@ -76,41 +76,7 @@ To install QNPy_Latte, use:
 pip install QNPy_Latte
 ```
 
-Requirements
-------------
-
-Similar to QNPy, we use a `requirements.txt` file with all the dependencies that need to be satisfied before you can use it as a standalone package. To install all requirements at once, navigate to the directory where you downloaded your package (where the `requirements.txt` file is) and run:
-```
-pip install -r requirements.txt
-```
-You are now ready to use the QNPy_Latte package.
-
-Special note 1: 
-
-If you have python >3.9 on your local machine you will encounter some requirements conflicts with torch and numpy versions. In this case, we recomend creating a virtual enviroment using conda:
-```
-conda create -n myenv python=3.9
-```
-
-then you have to activate the virtual enviroment:
-```
-conda activate "The name of your virtual enviroment"
-```
-
-After virtual enviroment is activated you can install QNPy_Latte and the requirements.txt file in your newly created enviroment as described above.
-
-Special note 2: 
-
-On windows machines, users have trouble with the pytorch installation. Thus, delete the torch line in the requirements file and install the as described above. Then, install pytorch manually (Choose the command based upon your CUDA/CPU) in your new enviornment:
-
-```
-# CUDA 11.6
-pip install torch==1.13.0+cu116 torchvision==0.14.0+cu116 torchaudio==0.13.0 --extra-index-url https://download.pytorch.org/whl/cu116
-# CUDA 11.7
-pip install torch==1.13.0+cu117 torchvision==0.14.0+cu117 torchaudio==0.13.0 --extra-index-url https://download.pytorch.org/whl/cu117
-# CPU only
-pip install torch==1.13.0+cpu torchvision==0.14.0+cpu torchaudio==0.13.0 --extra-index-url https://download.pytorch.org/whl/cpu
-```
+We recommend creating a new anaconda enviornment first and then running the above command.
 
 ## Tutorial Notebooks and Scripts
 The associated GitHub contains tutorial notebooks and scripts that utilize the QNPy package to conduct the clustering and modelling of light curves. Please visit [Our GitHub](https://github.com/rajuaman1/QNPy_Latte) for more.
