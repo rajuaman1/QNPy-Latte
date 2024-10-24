@@ -78,4 +78,4 @@ pip install QNPy_Latte
 We recommend creating a new anaconda enviornment first and then running the above command.
 
 ## Tutorial Notebooks and Scripts
-The associated GitHub contains tutorial notebooks and scripts that utilize the QNPy package to conduct the clustering and modelling of light curves. Please visit [Our GitHub](https://github.com/rajuaman1/QNPy_Latte) for more.
+The associated GitHub contains tutorial notebooks and scripts that utilize the QNPy_Latte package to conduct the clustering and modelling of light curves. Please visit [Our GitHub](https://github.com/rajuaman1/QNPy_Latte) for more.
